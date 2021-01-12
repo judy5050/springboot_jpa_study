@@ -21,3 +21,9 @@
 ### @JsonPropertyOrder
      해당 어노테이션을 사용해 직렬화의 특정 순서를 정할 수 있다
      
+### @RestController
+    srping MVC Controller 에 @ResponseBody가 추가된 것
+    주 용도는 json 형태로 객체 데이터 반환
+    
+     
+    
