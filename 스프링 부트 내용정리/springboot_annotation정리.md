@@ -25,5 +25,13 @@
     srping MVC Controller 에 @ResponseBody가 추가된 것
     주 용도는 json 형태로 객체 데이터 반환
     
+### @AllArgsConstructir
+     클래스에 있는 존재하는 모든 필드에 대한 생성자를 자동으로 생성해준다.
+     필드중 @NonNull 애노태이션 마크 존재시 자동으로 null-check로직을 자동으로 생성 해준다.
      
-    
+### @RequiredArgsConstructor 
+     추가작업을 필요로 하는 필드에 대한 생성자를 생성하는 애노테이션
+     초기화 되지 않은 모든 final필드, @NonNull로 마크되어 있는 모든 필드에 대해 생성자를 자동으로
+     생성해준다.
+     @NonNull마크가 있을경우 자동으로 null-check로직이 생성된다. 
+     @NonNull 마크가 있지만, 파라미터에서 null이 들어올경우 NullPointerException 이 발생한다.
