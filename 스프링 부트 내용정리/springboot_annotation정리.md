@@ -35,3 +35,7 @@
      생성해준다.
      @NonNull마크가 있을경우 자동으로 null-check로직이 생성된다. 
      @NonNull 마크가 있지만, 파라미터에서 null이 들어올경우 NullPointerException 이 발생한다.
+
+### @Builder는 Class(Type)가 Target일 경우에 생성자 유무에 따라 다르게 동작
+     생성자가 없는 경우 :모든 멤버변수를 파라미터로 받는 기본 생성자 생성
+     생성자가 있을 경우 :따로 생성자 생성 X
