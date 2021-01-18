@@ -7,12 +7,14 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.order.query.OrderQueryDto;
+import jpabook.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private  final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
+
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
@@ -100,11 +104,28 @@ public class OrderApiController {
     }
 
 
-    //one to many 에서 fetch join 을 쓸 경우 페이징 처리가 안된다.(메모리에서 페이징 처리됨->매우 위험함)
+    //일대 다 에서 fetch join 할경우 페이징 처리가 안된다.
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3(){
+     List<Order> orders=  orderRepository.findAllWithItem();
 
-        List<Order> orders=orderRepository.findAllWithItem();
+        List<OrderDto> result=orders.stream().map(o->new OrderDto(o))
+                .collect(Collectors.toList());
+        return result;
+
+    }
+
+
+
+
+
+    //one to many 에서 fetch join 을 쓸 경우 페이징 처리가 안된다.(메모리에서 페이징 처리됨->매우 위험함)
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDto> ordersV3(
+            @RequestParam(value= "offset",defaultValue = "0") int offset,
+            @RequestParam(value="limit",defaultValue = "100") int limit){
+
+        List<Order> orders=orderRepository.findAllWithMemberDelivery(offset,limit);
         List<OrderDto> result=orders.stream()
                 .map(o->new OrderDto(o))
                 .collect(Collectors.toList());
@@ -112,6 +133,11 @@ public class OrderApiController {
 
     }
 
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4(){
+        return orderQueryRepository.findOrderQueryDtos();
+    }
 
 
 

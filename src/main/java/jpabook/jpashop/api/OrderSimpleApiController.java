@@ -83,6 +83,9 @@ public class OrderSimpleApiController {
         return result;
     }
 
+
+
+
     @GetMapping("/api/v4/simple-orders")//api 에 딱 맞게 설계 재사용성 떨어짐
     public List<OrderSimpleQueryDto>orderV4(){
         return orderSimpleQueryRepository.findOrderDtos();
