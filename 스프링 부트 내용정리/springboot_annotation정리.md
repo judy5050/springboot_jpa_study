@@ -43,4 +43,8 @@
      
 ### @NoArgsConstructor
      파라미터가 없는 기본 생성자를 생성해준다.
-     
+
+### @Data
+    클래스안의 모든 private 필드에 대해 @Getter와 @Setter를 적용하여 세터/게터를 만들어주고
+    클래스내에 @ToString 과 @EqualsAndHashCode를 적용시켜 메소드를 오버라이드 해주고
+    @RequiredArgsConstructor를 지정해 줌
